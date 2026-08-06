@@ -73,6 +73,13 @@ const others = [
   ["SilentGuard", "창업아이디어 경진대회 · 은상 · 2026.04–05", "독거노인 이상탐지 서비스 기획. 종료 후 UCI 가정 전력 데이터(34,168시간)로 로직을 직접 구현해 z-threshold별 재현율·오탐률을 실측"],
 ];
 
+const skills = [
+  ["데이터 분석", "GA 퍼널·시계열·UI 클릭 분석, 피처 엔지니어링, 과적합 관리·앙상블 모델링"],
+  ["AI 구현", "Claude Code 서브에이전트·스킬 프롬프트 설계, MCP 서버 구현, Dify 에이전트·RAG 챗봇, 멀티에이전트 협업 구조 설계, 회귀 평가 하네스 구축"],
+  ["서비스 기획", "디자인씽킹 — 고객 인터뷰 → 문제 정의 → 프로토타입"],
+  ["Tools", "Python, SQL, HTML/CSS/JavaScript, GA, Dify, Git, Claude Code"],
+];
+
 const awards = [
   ["동상 — 글로벌 스타트업 해커톤", "국민대학교", "2026-07"],
   ["우수상 — 캡스톤디자인", "국민대학교", "2026-06"],
@@ -92,93 +99,117 @@ const certs = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>신현빈 — AI 서비스 개발 · 데이터</title>
     <meta name="description" content="디자인씽킹으로 문제를 정의하고, LLM 에이전트와 데이터 분석으로 구현·검증합니다." />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
     <style>
       :root {
-        --bg: #fdfdfc; --fg: #1a1a18; --muted: #6b6b65;
-        --line: #e4e4e0; --accent: #b4530a; --card: #f7f7f5;
-      }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #14140f; --fg: #eceae4; --muted: #9a978d;
-          --line: #2e2e28; --accent: #e59b52; --card: #1c1c16;
-        }
+        --bg: #fff; --fg: #222; --muted: #666; --sub: #333;
+        --line: #eee; --accent: #3a7bd5; --accent2: #00d2ff;
       }
       * { box-sizing: border-box; }
-      body {
-        margin: 0; background: var(--bg); color: var(--fg);
-        font: 16px/1.7 ui-sans-serif, -apple-system, "Pretendard", "Apple SD Gothic Neo",
-              "Malgun Gothic", system-ui, sans-serif;
+      ::selection { background: var(--accent2); }
+
+      html, body {
+        margin: 0;
+        font-size: 16px;
+        word-break: keep-all;
+        font-family: "Pretendard Variable", Pretendard, -apple-system,
+          BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI",
+          Roboto, "Malgun Gothic", sans-serif;
+        letter-spacing: -0.3px;
+        background: var(--bg);
+        color: var(--fg);
+        padding-bottom: 2rem;
+        overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
-      main { max-width: 46rem; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
-      a { color: var(--accent); text-decoration: none; }
-      a:hover { text-decoration: underline; }
-      h1 { font-size: 2rem; margin: 0 0 .4rem; letter-spacing: -.02em; }
-      h2 {
-        font-size: .8rem; text-transform: uppercase; letter-spacing: .12em;
-        color: var(--muted); margin: 3.5rem 0 1.25rem; font-weight: 600;
+      @media screen and (max-width: 960px) {
+        html, body { font-size: 14px; }
       }
-      h3 { font-size: 1.05rem; margin: 0 0 .2rem; }
-      .lede { color: var(--muted); margin: 0 0 1.25rem; }
-      .links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: .92rem; }
-      .hint { font-size: .8rem; color: var(--muted); margin: 1.1rem 0 0; }
-      .card {
-        border: 1px solid var(--line); border-radius: 10px;
-        padding: 1.4rem; margin-bottom: 1rem; background: var(--card);
+
+      /* 상단 고정 그라디언트 바 — 레퍼런스 UI의 시그니처. */
+      body::before {
+        position: fixed; z-index: 1; top: 0; left: 0;
+        display: block; content: ""; width: 100%; height: 10px;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
       }
-      .meta { font-size: .82rem; color: var(--muted); }
-      .role { font-size: .88rem; margin: .55rem 0 .7rem; font-weight: 600; }
-      .card p { margin: 0 0 .8rem; font-size: .95rem; }
-      ul { margin: 0; padding-left: 1.1rem; }
-      li { font-size: .9rem; color: var(--muted); margin-bottom: .25rem; }
-      .stack { font-size: .82rem; color: var(--muted); margin: .8rem 0 0; }
-      .stack b { color: var(--fg); font-weight: 600; }
-      .card .links { margin-top: .9rem; font-size: .88rem; }
-      .strengths { margin: 0; padding-left: 1.1rem; }
-      .strengths li { font-size: .95rem; color: var(--fg); margin-bottom: .6rem; }
-      .row {
-        display: flex; justify-content: space-between; gap: 1rem;
-        padding: .7rem 0; border-bottom: 1px solid var(--line); font-size: .92rem;
+
+      .container { width: 100%; max-width: 50rem; margin: auto; }
+      section { padding: 0 2rem; }
+
+      h1 { font-size: 5rem; line-height: 1.1; }
+      h2 { font-size: 3rem; margin: 4rem 0 2rem; }
+      h3, h4 { font-size: 2rem; margin: 0 0 1rem; }
+      h5 { font-size: 1.3rem; margin: 0 0 .5rem; color: var(--sub); }
+      @media screen and (max-width: 960px) {
+        h1 { font-size: 3rem; }
+        h4 { font-size: 1.5rem; }
       }
-      .row:last-child { border-bottom: 0; }
-      .row span { color: var(--muted); white-space: nowrap; font-size: .85rem; }
-      .skill { margin-bottom: .9rem; font-size: .93rem; }
-      .skill b { display: block; font-size: .8rem; color: var(--muted); margin-bottom: .1rem; }
-      footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
-               font-size: .88rem; color: var(--muted); }
+
+      p { margin: 0 0 1rem; font-size: 1.1rem; line-height: 1.4; }
+      a { color: var(--accent); transition: color .3s ease; text-decoration: none; }
+      a:hover { color: var(--accent2); }
+
+      ul { list-style: none; padding: 0; margin: 0 0 1rem; font-size: 1.1rem; }
+      ul > li { position: relative; padding: .2rem 0 .2rem 1rem; line-height: 1.4; }
+      ul > li::before {
+        position: absolute; left: 0; display: inline-block;
+        content: "\2022"; color: var(--accent);
+      }
+
+      .big-paragraph { font-size: 2rem; line-height: 1.4; font-weight: 500; }
+      @media screen and (max-width: 960px) {
+        .big-paragraph { font-size: 1.5rem; }
+      }
+
+      .row { display: flex; padding: 3rem 0; border-bottom: 1px solid var(--line); }
+      .row-left { flex-basis: 18rem; padding-right: 1rem; flex-shrink: 0; }
+      .row-right { flex-grow: 1; }
+      @media screen and (max-width: 960px) {
+        .row { flex-direction: column; }
+        .row-left { flex-basis: 100%; padding-right: 0; padding-bottom: 1rem; }
+      }
+
+      .other { padding: 3rem 0; border-bottom: 1px solid var(--line); }
+      /* 설명 없는 한 줄짜리 항목(수상·자격·학력)에 3rem은 지면 낭비. */
+      .other.compact { padding: 1.25rem 0; }
+      .other.compact h4 { font-size: 1.3rem; margin-bottom: .15rem; }
+      .other.compact .time { margin-bottom: 0; }
+      .role { display: block; color: var(--muted); font-size: 1rem; line-height: 1.4; }
+      .time { display: block; margin-bottom: 1.5rem; color: var(--muted); font-size: 1rem; }
+      .links { display: flex; flex-wrap: wrap; gap: 1.25rem; font-size: 1.1rem; }
+      footer { padding: 3rem 2rem 0; color: var(--muted); font-size: 1rem; }
 
       @media print {
-        /* 이 페이지가 곧 이력서 PDF의 소스다. 다크모드가 인쇄로 새지 않도록 라이트 강제. */
+        /* 이 페이지가 곧 이력서 PDF의 소스다. 컬러 액센트는 흑백 인쇄에서 죽으므로 검정 강제. */
         :root {
-          --bg: #fff; --fg: #111; --muted: #444;
-          --line: #ccc; --accent: #111; --card: #fff;
+          --bg: #fff; --fg: #111; --muted: #444; --sub: #222;
+          --line: #ccc; --accent: #111; --accent2: #111;
         }
         @page { size: A4; margin: 12mm; }
+        body::before { display: none; }
         /* rem은 html 기준이라 body 축소로는 안 줄어든다 — 인쇄용 크기는 전부 pt로 명시. */
-        body { font-size: 10pt; line-height: 1.4; }
-        main { max-width: none; padding: 0; }
-        h1 { font-size: 17pt; margin-bottom: .2rem; }
-        h2 { font-size: 8.5pt; margin: .6rem 0 .25rem; }
-        h3 { font-size: 10.5pt; }
-        .lede { font-size: 9.5pt; margin-bottom: .35rem; }
-        .links { font-size: 9pt; gap: .8rem; }
-        .hint { display: none; }
-        .card {
-          border: 0; border-top: 1px solid var(--line); border-radius: 0;
-          padding: .35rem 0 0; margin-bottom: .3rem; background: none;
+        html, body { font-size: 9.5pt; padding-bottom: 0; }
+        .container { max-width: none; }
+        section { padding: 0; }
+        h1 { font-size: 20pt; margin: 0 0 .3rem; }
+        h2 { font-size: 12pt; margin: 1.1rem 0 .5rem; }
+        h3 { font-size: 12pt; margin: 0 0 .2rem; }
+        h4 { font-size: 11pt; margin: 0 0 .2rem; }
+        h5 { font-size: 8.5pt; margin: 0 0 .15rem; }
+        p, ul { font-size: 9.5pt; margin-bottom: .35rem; }
+        li { padding: .05rem 0 .05rem 1rem; }
+        .big-paragraph { font-size: 11pt; font-weight: 500; }
+        .role, .time, .links, footer { font-size: 9pt; }
+        .time { margin-bottom: .4rem; }
+        .row, .other {
+          padding: .5rem 0;
           break-inside: avoid; page-break-inside: avoid;
         }
-        .card p { font-size: 9.5pt; line-height: 1.35; margin-bottom: .25rem; }
-        li, .meta, .stack, .card .links { font-size: 9pt; }
-        li { margin-bottom: .1rem; }
-        .strengths li { font-size: 9.5pt; margin-bottom: .1rem; }
-        .role { font-size: 9.5pt; margin: .2rem 0 .25rem; }
-        .stack { margin-top: .25rem; }
-        .card .links { margin-top: .25rem; }
-        .skill { font-size: 9.5pt; margin-bottom: .22rem; }
-        .skill b { display: inline; font-size: 9.5pt; color: var(--fg); }
-        .skill b::after { content: " — "; }
-        .row { padding: .14rem 0; font-size: 9.5pt; }
+        .row-left { flex-basis: 12rem; }
         a { color: inherit; text-decoration: underline; }
         /* 인쇄본에선 헤더 연락처와 중복 — 지면만 먹는다. */
         footer { display: none; }
@@ -186,72 +217,105 @@ const certs = [
     </style>
   </head>
   <body>
-    <main>
-      <h1>신현빈</h1>
-      <p class="lede">
-        AI 서비스 개발 · 데이터 — 디자인씽킹으로 문제를 정의하고 LLM 에이전트와 데이터 분석으로
-        구현합니다. AI는 가속 도구로 쓰되, 판단과 검증은 수치로 남깁니다.
-      </p>
-      <div class="links">
-        <a href="mailto:guszhd95@gmail.com">guszhd95@gmail.com</a>
-        <a href="https://github.com/hyunbean">GitHub</a>
-        <a href="https://app.notion.com/p/39a737e11aeb811c93b1db3175843024?source=copy_link">포트폴리오</a>
-      </div>
-      <p class="hint">이 페이지는 인쇄(Ctrl/⌘ + P)하면 그대로 A4 이력서 PDF가 됩니다.</p>
-
-      <h2>핵심 역량</h2>
-      <ul class="strengths">{strengths.map((s) => <li>{s}</li>)}</ul>
-
-      <h2>프로젝트</h2>
-      {projects.map((p) => (
-        <article class="card">
-          <h3>{p.name}</h3>
-          <div class="meta">{p.meta}</div>
-          <div class="role">{p.role}</div>
-          <p>{p.body}</p>
-          <ul>{p.metrics.map((m) => <li>{m}</li>)}</ul>
-          <p class="stack"><b>기술 스택</b> — {p.stack}</p>
-          <div class="links">
-            {p.links.map(([label, href]) => <a href={href}>{label} →</a>)}
-          </div>
-        </article>
-      ))}
-
-      <h2>그 외</h2>
-      {others.map(([name, meta, body]) => (
-        <div class="card">
-          <h3>{name}</h3>
-          <div class="meta">{meta}</div>
-          <p style="margin:.6rem 0 0">{body}</p>
+    <div class="container">
+      <section>
+        <h1>반갑습니다,<br />저는 신현빈입니다</h1>
+        <p class="big-paragraph">
+          디자인씽킹으로 문제를 정의하고 LLM 에이전트와 데이터 분석으로 구현합니다.
+          AI는 가속 도구로 쓰되, 판단과 검증은 수치로 남깁니다.
+        </p>
+        <div class="links">
+          <a href="mailto:guszhd95@gmail.com">guszhd95@gmail.com</a>
+          <a href="https://github.com/hyunbean">GitHub</a>
+          <a href="https://app.notion.com/p/39a737e11aeb811c93b1db3175843024?source=copy_link">포트폴리오</a>
         </div>
-      ))}
+      </section>
 
-      <h2>기술</h2>
-      <div class="skill"><b>데이터 분석</b>GA 퍼널·시계열·UI 클릭 분석, 피처 엔지니어링, 과적합 관리·앙상블 모델링</div>
-      <div class="skill"><b>AI 구현</b>Claude Code 서브에이전트·스킬 프롬프트 설계, MCP 서버 구현, Dify 에이전트·RAG 챗봇, 멀티에이전트 협업 구조 설계, 회귀 평가 하네스 구축</div>
-      <div class="skill"><b>서비스 기획</b>디자인씽킹 — 고객 인터뷰 → 문제 정의 → 프로토타입</div>
-      <div class="skill"><b>Tools</b>Python, SQL, HTML/CSS/JavaScript, GA, Dify, Git, Claude Code</div>
+      <section>
+        <h2>핵심 역량</h2>
+        <ul>{strengths.map((s) => <li>{s}</li>)}</ul>
+      </section>
 
-      <h2>수상</h2>
-      {awards.map(([name, org, when]) => (
-        <div class="row">{name} · {org}<span>{when}</span></div>
-      ))}
+      <section>
+        <h2>프로젝트</h2>
+        {projects.map((p) => (
+          <div class="row">
+            <div class="row-left">
+              <h3>{p.name}</h3>
+              <span class="role">{p.meta}</span>
+            </div>
+            <div class="row-right">
+              <h5>Role</h5>
+              <p>{p.role}</p>
+              <h5>Description</h5>
+              <p>{p.body}</p>
+              <h5>What did I do</h5>
+              <ul>{p.metrics.map((m) => <li>{m}</li>)}</ul>
+              <h5>Tech Stack</h5>
+              <p>{p.stack}</p>
+              <div class="links">
+                {p.links.map(([label, href]) => <a href={href}>{label} →</a>)}
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
 
-      <h2>자격</h2>
-      {certs.map(([name, when]) => (
-        <div class="row">{name}<span>{when}</span></div>
-      ))}
+      <section>
+        <h2>그 외</h2>
+        {others.map(([name, meta, body]) => (
+          <div class="other">
+            <h4>{name}</h4>
+            <span class="time">{meta}</span>
+            <p>{body}</p>
+          </div>
+        ))}
+      </section>
 
-      <h2>학력</h2>
-      <div class="row">
-        국민대학교 경영정보학부 비즈니스IT전공 · 인포메이션테크놀로지전공(제2전공)
-        <span>2027.02 졸업 예정</span>
-      </div>
+      <section>
+        <h2>기술</h2>
+        {skills.map(([name, body]) => (
+          <div class="row">
+            <div class="row-left"><h4>{name}</h4></div>
+            <div class="row-right"><p>{body}</p></div>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h2>수상</h2>
+        {awards.map(([name, org, when]) => (
+          <div class="other compact">
+            <h4>{name}</h4>
+            <span class="time">{org} · {when}</span>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h2>자격</h2>
+        {certs.map(([name, when]) => (
+          <div class="other compact">
+            <h4>{name}</h4>
+            <span class="time">{when}</span>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h2>학력</h2>
+        <div class="other compact">
+          <h4>국민대학교</h4>
+          <span class="time">
+            경영정보학부 비즈니스IT전공 · 인포메이션테크놀로지전공(제2전공) · 2027.02 졸업 예정
+          </span>
+        </div>
+      </section>
 
       <footer>
         신현빈 · <a href="mailto:guszhd95@gmail.com">guszhd95@gmail.com</a> ·
         <a href="https://github.com/hyunbean">github.com/hyunbean</a>
       </footer>
-    </main>
+    </div>
   </body>
 </html>
