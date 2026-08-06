@@ -1,42 +1,40 @@
 ---
+const strengths = [
+  "디자인씽킹으로 문제를 정의하고 AI 워크플로로 구현까지 완결 — 캡스톤디자인(우수상)·글로벌 스타트업 해커톤(동상)·창업아이디어 경진대회(은상)에서 연속 수행",
+  "LLM 에이전트 파이프라인 설계·구현 — Claude Code 스킬(오케스트레이터 + 서브에이전트 11개), Dify 멀티에이전트, RAG 챗봇, MCP 서버(도구 4종, stdio JSON-RPC)",
+  "AI 워크플로 품질을 감이 아니라 수치로 검증 — 골든셋 60케이스 회귀 평가 하네스와 CI를 직접 구축해 정확도 57/60 → 60/60, 응답시간 4.19s → 1.14s 실측",
+  "모델링 전 과정 수행 — 도메인 기반 피처 엔지니어링, 데이터 누수 적발·제거, 과적합 방어 앙상블로 ML 컴피티션 2등. 빅데이터분석기사·ADsP·SQLD 보유",
+];
+
 const projects = [
   {
     name: "BozorCheck AI",
     meta: "글로벌 스타트업 해커톤 · 동상 · 2026.06–07",
     role: "Dify 워크플로 3종 설계·구축, 평가 하네스, 레퍼런스 백엔드",
-    body: "우즈베키스탄 재래시장 시세 조회 서비스의 AI 파트. 가격 계산·판정은 백엔드가 단일 진실 원천이고 LLM은 설명 계층만 담당하도록 역할을 분리했다. 프로젝트 종료 후 골든셋 60케이스 + LLM-as-judge 없는 결정론적 채점기 + CI 회귀 평가를 직접 구축.",
+    body: "우즈베키스탄 재래시장 시세 조회 서비스의 AI 파트. 가격 계산·판정은 백엔드가 단일 진실 원천이고 LLM은 설명 계층만 담당하도록 역할을 분리했다. 현지 학생 인터뷰 결과를 의사결정 기준으로 삼아 주제를 두 번 피벗했다.",
     metrics: [
-      "재현 평가에서 실패 3건 원인 진단·수정 → 57/60(95%) → 60/60",
-      "별도 holdout 재측정 14/15(93%) — 튜닝셋 수치와 분리해 기록",
-      "규칙 기반 사전 필터로 LLM 우회 경로 응답 4.19s → 1.14s (약 73% 단축)",
+      "가격 제보 검증을 기본 검증 → 규칙 평가 → LLM 이상치 리뷰 → 출력 파이프라인으로 분해해 'Report Inspector' 에이전트 설계",
+      "프로젝트 종료 후 골든셋 60케이스 + LLM-as-judge 없는 결정론적 채점기 + GitHub Actions CI로 회귀 평가 하네스를 직접 구축",
+      "재현 평가에서 실패 3건의 원인(지식베이스 검색 경쟁, 우즈베크어 동형이의어)을 진단·수정 → 57/60(95%) → 60/60",
+      "별도 holdout 재측정 14/15(93%) — 튜닝에 쓴 데이터로 잰 수치와 분리해 기록",
+      "규칙 기반 사전 필터로 LLM 우회 경로 응답 4.19s → 1.14s (약 73% 단축, 해당 비율만큼 API 비용 미발생)",
     ],
+    stack: "Dify · Python · Claude Code · GitHub Actions · Docker",
     links: [["GitHub", "https://github.com/hyunbean/tuit_hackathon_dify"]],
   },
   {
-    name: "주머니 (ZooMoney)",
-    meta: "캡스톤디자인 · 우수상 · 2026.03–06",
-    role: "프론트엔드 단독 개발 + Dify 에이전트 5종 설계",
-    body: "가계부 사용자 3유형을 1:1 심층 인터뷰해 \"지속은 기능이 아니라 동기·목표에서 갈린다\"는 인사이트를 도출하고, 목표 설정부터 캐릭터 성장까지 기능을 설계했다. API 키는 Cloudflare Worker 게이트웨이 뒤에만 두고 프론트는 에이전트 이름만 전달한다.",
-    metrics: [
-      "Dify 에이전트 5종 (목표설정·소비분석·예산플래닝·트레이너챗봇·소비요약)",
-      "지식베이스 + RAG(Cohere 리랭킹) 기반 절약팁 챗봇",
-      "게이트웨이 직접 호출로 토큰·비용·지연 실측",
-    ],
-    links: [
-      ["라이브 데모", "https://hyunbean.github.io/ZooMoney/"],
-      ["GitHub", "https://github.com/hyunbean/ZooMoney"],
-    ],
-  },
-  {
     name: "ML 컴피티션 — 고객 성별 예측",
-    meta: "교내 Kaggle 컴피티션 · 2등 · 2026.05–06",
+    meta: "교내 경진대회 · 2등 · 2026.05–06",
     role: "파이프라인 설계, 피처 엔지니어링, 앙상블·제출 전략",
     body: "카드 소비 데이터로 고객 성별을 예측하는 이진 분류(ROC-AUC). Public 1위로 마쳤으나 Private에서 2위로 역전당했고, 왜 졌는지를 상위 솔루션과 대조 분석한 회고가 이 프로젝트의 핵심 자산이다.",
     metrics: [
+      "도메인 지식 체계화 → 후보 피처 생성 → 중요도 기반 정제 순으로 피처 엔지니어링을 구조화",
+      "서로 다른 모델링 접근 57개를 설계·구현 — 최종 앙상블 120개 모델 중 108개가 여기서 나옴",
       "개별 모델 천장 0.71~0.72 → 4단계 앙상블로 0.738",
       "데이터 누수 피처 적발 — 부풀려진 +0.005가 OOF 재계산 후 +0.00156로 축소",
-      "갭–public 상관 +0.63(과적합형) vs 우승팀 −0.19 — 패인을 정량화",
+      "갭–public 상관 +0.63(과적합형) vs 우승팀 −0.19 — 역전패의 원인을 정량화",
     ],
+    stack: "Python · CatBoost · XGBoost · LightGBM · scikit-learn · pandas",
     links: [["GitHub", "https://github.com/hyunbean/ML_Final_Competition"]],
   },
   {
@@ -49,13 +47,36 @@ const projects = [
       "LLM을 직접 호출하지 않고 방법론만 제공 — 산출물 생성은 클라이언트 모델이 수행",
       "최소 권한 원칙 — 텍스트 스텝은 Read만, 이미지 스텝만 Write/Bash",
     ],
+    stack: "Claude Code Skill · MCP(Node, stdio JSON-RPC) · Python",
     links: [["GitHub", "https://github.com/hyunbean/DesignThinking"]],
+  },
+  {
+    name: "주머니 (ZooMoney)",
+    meta: "캡스톤디자인 · 우수상 · 2026.03–06",
+    role: "디자인씽킹 전 과정 + Dify 에이전트 5종 설계·구축",
+    body: "가계부 사용자 3유형을 1:1 심층 인터뷰해 \"지속은 기능이 아니라 동기·목표에서 갈린다\"는 인사이트를 도출하고, 목표 설정부터 캐릭터 성장까지 기능을 설계했다. API 키는 Cloudflare Worker 게이트웨이 뒤에만 두고 프론트는 에이전트 이름만 전달한다.",
+    metrics: [
+      "Dify 에이전트 5종 설계·구축 (목표설정·소비분석·예산플래닝·트레이너챗봇·소비요약)",
+      "지식베이스 + RAG(Cohere 리랭킹) 기반 절약팁 챗봇 구현",
+      "게이트웨이를 직접 호출해 토큰·비용·지연 실측 — 평균 호출당 $0.000087",
+    ],
+    stack: "JavaScript · CSS · Cloudflare Workers · Dify · Cohere Rerank",
+    links: [
+      ["라이브 데모", "https://hyunbean.github.io/ZooMoney/"],
+      ["GitHub", "https://github.com/hyunbean/ZooMoney"],
+    ],
   },
 ];
 
 const others = [
   ["LG헬로비전 기업연계 프로젝트", "2024.09–12", "GA 전권으로 유입·전환·이탈을 분석하고 홈페이지 UI 개선안과 A/B 테스트를 설계해 기업에 전달"],
-  ["SilentGuard", "창업아이디어 경진대회 · 은상 · 2026.04–05", "독거노인 이상탐지 서비스 기획. 종료 후 UCI 가정 전력 데이터로 로직을 직접 구현해 z-threshold별 재현율·오탐률을 실측"],
+  ["SilentGuard", "창업아이디어 경진대회 · 은상 · 2026.04–05", "독거노인 이상탐지 서비스 기획. 종료 후 UCI 가정 전력 데이터(34,168시간)로 로직을 직접 구현해 z-threshold별 재현율·오탐률을 실측"],
+];
+
+const awards = [
+  ["동상 — 글로벌 스타트업 해커톤", "국민대학교", "2026-07"],
+  ["우수상 — 캡스톤디자인", "국민대학교", "2026-06"],
+  ["은상 — 제19회 경영대학 창업데이 창업아이디어 경진대회", "국민대학교", "2026-05"],
 ];
 
 const certs = [
@@ -100,6 +121,7 @@ const certs = [
       h3 { font-size: 1.05rem; margin: 0 0 .2rem; }
       .lede { color: var(--muted); margin: 0 0 1.25rem; }
       .links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: .92rem; }
+      .hint { font-size: .8rem; color: var(--muted); margin: 1.1rem 0 0; }
       .card {
         border: 1px solid var(--line); border-radius: 10px;
         padding: 1.4rem; margin-bottom: 1rem; background: var(--card);
@@ -109,7 +131,11 @@ const certs = [
       .card p { margin: 0 0 .8rem; font-size: .95rem; }
       ul { margin: 0; padding-left: 1.1rem; }
       li { font-size: .9rem; color: var(--muted); margin-bottom: .25rem; }
+      .stack { font-size: .82rem; color: var(--muted); margin: .8rem 0 0; }
+      .stack b { color: var(--fg); font-weight: 600; }
       .card .links { margin-top: .9rem; font-size: .88rem; }
+      .strengths { margin: 0; padding-left: 1.1rem; }
+      .strengths li { font-size: .95rem; color: var(--fg); margin-bottom: .6rem; }
       .row {
         display: flex; justify-content: space-between; gap: 1rem;
         padding: .7rem 0; border-bottom: 1px solid var(--line); font-size: .92rem;
@@ -120,32 +146,61 @@ const certs = [
       .skill b { display: block; font-size: .8rem; color: var(--muted); margin-bottom: .1rem; }
       footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
                font-size: .88rem; color: var(--muted); }
+
+      @media print {
+        /* 이 페이지가 곧 이력서 PDF의 소스다. 다크모드가 인쇄로 새지 않도록 라이트 강제. */
+        :root {
+          --bg: #fff; --fg: #111; --muted: #444;
+          --line: #ccc; --accent: #111; --card: #fff;
+        }
+        @page { size: A4; margin: 12mm; }
+        /* rem은 html 기준이라 body 축소로는 안 줄어든다 — 인쇄용 크기는 전부 pt로 명시. */
+        body { font-size: 10pt; line-height: 1.4; }
+        main { max-width: none; padding: 0; }
+        h1 { font-size: 17pt; margin-bottom: .2rem; }
+        h2 { font-size: 8.5pt; margin: .6rem 0 .25rem; }
+        h3 { font-size: 10.5pt; }
+        .lede { font-size: 9.5pt; margin-bottom: .35rem; }
+        .links { font-size: 9pt; gap: .8rem; }
+        .hint { display: none; }
+        .card {
+          border: 0; border-top: 1px solid var(--line); border-radius: 0;
+          padding: .35rem 0 0; margin-bottom: .3rem; background: none;
+          break-inside: avoid; page-break-inside: avoid;
+        }
+        .card p { font-size: 9.5pt; line-height: 1.35; margin-bottom: .25rem; }
+        li, .meta, .stack, .card .links { font-size: 9pt; }
+        li { margin-bottom: .1rem; }
+        .strengths li { font-size: 9.5pt; margin-bottom: .1rem; }
+        .role { font-size: 9.5pt; margin: .2rem 0 .25rem; }
+        .stack { margin-top: .25rem; }
+        .card .links { margin-top: .25rem; }
+        .skill { font-size: 9.5pt; margin-bottom: .22rem; }
+        .skill b { display: inline; font-size: 9.5pt; color: var(--fg); }
+        .skill b::after { content: " — "; }
+        .row { padding: .14rem 0; font-size: 9.5pt; }
+        a { color: inherit; text-decoration: underline; }
+        /* 인쇄본에선 헤더 연락처와 중복 — 지면만 먹는다. */
+        footer { display: none; }
+      }
     </style>
   </head>
   <body>
     <main>
       <h1>신현빈</h1>
       <p class="lede">
-        AI 서비스 개발 · 데이터 — 디자인씽킹으로 문제를 정의하고, LLM 에이전트(Dify·RAG)와
-        데이터 분석으로 구현·검증합니다. AI를 가속 도구로 쓰되 판단과 검증은 사람이
-        책임진다는 원칙으로 일합니다.
+        AI 서비스 개발 · 데이터 — 디자인씽킹으로 문제를 정의하고 LLM 에이전트와 데이터 분석으로
+        구현합니다. AI는 가속 도구로 쓰되, 판단과 검증은 수치로 남깁니다.
       </p>
       <div class="links">
-        <a href="https://github.com/hyunbean">GitHub</a>
         <a href="mailto:guszhd95@gmail.com">guszhd95@gmail.com</a>
+        <a href="https://github.com/hyunbean">GitHub</a>
+        <a href="https://app.notion.com/p/39a737e11aeb811c93b1db3175843024?source=copy_link">포트폴리오</a>
       </div>
+      <p class="hint">이 페이지는 인쇄(Ctrl/⌘ + P)하면 그대로 A4 이력서 PDF가 됩니다.</p>
 
-      <h2>일하는 방식</h2>
-      <div class="card">
-        <p>
-          AI 워크플로의 품질을 감이 아니라 <b>기준</b>으로 측정하고, 그 결과를 코드로 남깁니다.
-          골든셋 회귀 평가, 결정론적 채점기, CI 연동, 응답시간·비용 실측이 그 방식입니다.
-        </p>
-        <p style="margin:0">
-          측정에는 정직성 라벨을 붙입니다 — 튜닝에 쓴 데이터로 잰 수치와 별도 holdout 수치를
-          분리해 기록하고, 사후에 재현한 값은 프로젝트 당시 실측과 섞지 않습니다.
-        </p>
-      </div>
+      <h2>핵심 역량</h2>
+      <ul class="strengths">{strengths.map((s) => <li>{s}</li>)}</ul>
 
       <h2>프로젝트</h2>
       {projects.map((p) => (
@@ -155,6 +210,7 @@ const certs = [
           <div class="role">{p.role}</div>
           <p>{p.body}</p>
           <ul>{p.metrics.map((m) => <li>{m}</li>)}</ul>
+          <p class="stack"><b>기술 스택</b> — {p.stack}</p>
           <div class="links">
             {p.links.map(([label, href]) => <a href={href}>{label} →</a>)}
           </div>
@@ -175,6 +231,11 @@ const certs = [
       <div class="skill"><b>AI 구현</b>Claude Code 서브에이전트·스킬 프롬프트 설계, MCP 서버 구현, Dify 에이전트·RAG 챗봇, 멀티에이전트 협업 구조 설계, 회귀 평가 하네스 구축</div>
       <div class="skill"><b>서비스 기획</b>디자인씽킹 — 고객 인터뷰 → 문제 정의 → 프로토타입</div>
       <div class="skill"><b>Tools</b>Python, SQL, HTML/CSS/JavaScript, GA, Dify, Git, Claude Code</div>
+
+      <h2>수상</h2>
+      {awards.map(([name, org, when]) => (
+        <div class="row">{name} · {org}<span>{when}</span></div>
+      ))}
 
       <h2>자격</h2>
       {certs.map(([name, when]) => (
